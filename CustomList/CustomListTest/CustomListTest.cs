@@ -10,23 +10,23 @@ namespace CustomListTest
     public class CustomListTest
     {
         [TestMethod]
-        public void Custom_List_Add_CheckifValueExistsAtIndex() // should be descriptive of test
+        public void Add_CheckSpecificIndex_ValueExists() // should be descriptive of test
         {
             //arrange
             CustomListClass<string> customList = new CustomListClass<string>();
             string input = "string";
-            string actual = "string";
+           
             string expected = customList[0];
 
             //act call method
             customList.Add(input);
 
             //assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, input);
 
         }
         [TestMethod]
-        public void Custom_List_Add_CheckCount() // should be descriptive of test
+        public void Add_CheckCount_CountIncreases() // should be descriptive of test
         {
             //arrange
             CustomListClass<string> customList = new CustomListClass<string>();
@@ -35,7 +35,7 @@ namespace CustomListTest
 
             //act call method
             customList.Add(value);
-            int actualCount = customList.Count();
+            int actualCount = customList.Count;
 
             //assert 
             Assert.AreEqual(expectedCount, actualCount);
@@ -43,42 +43,151 @@ namespace CustomListTest
         }
 
         [TestMethod]
-        public void Custom_List_Add_CheckExistingArrayLength() // should be descriptive of test
+        public void Add_CheckCapacity_CapacityIncreasesWhenLessThanCountMinus1() // should be descriptive of test
         {
             //arrange
-            CustomListClass<string> customList = new CustomListClass<string>();
-            string value= "string";
+            CustomListClass<int> customList = new CustomListClass<int>();
+            int value= 1;
+            int value2 = 2;
+            int value3 = 3;
+            int value4 = 4;
+            int value5 = 5;
+
+
             bool expectedBool = true;
 
             //act call method
             customList.Add(value);
-            int count = customList.Count();
-            int capacity = customList.Capacity()
-            bool actualBool = CheckCapacity(count, capacity);
+            customList.Add(value2);
+            customList.Add(value3);
+            customList.Add(value4);
+            customList.Add(value5);
+            int count = customList.Count;
+            int capacity = customList.Capacity;
+            bool actualBool = customList.CheckCapacity(count, capacity);//half capacity double length
 
             //assert 
             Assert.AreEqual(expectedBool, actualBool);
         }
         [TestMethod]
-        public void Custom_List_Add_CheckListValues() // should be descriptive of test
+        public void Add_CheckIndex_ValueIsAtEnd() // should be descriptive of test
         {
             //arrange
             CustomListClass<string> customList = new CustomListClass<string>();
             string input = "words";
             string input2 = "other";
             string input3 = "something";
-            CustomListClass<string> expected = {"words", "other", "something"};
+            string actual = "other";
+            string expected = customList[1];
 
 
             //act call method
             customList.Add(input);
             customList.Add(input2);
-            customList.Add(input3);
-            CustomListClass<string> actual = customList; 
+            customList.Add(input3); 
+
 
             //assert assert. 
             Assert.AreEqual(expected, actual);
 
         }
+
+        [TestMethod]
+        public void Remove_CheckCount_CountDecreasesWhenIndexRemoved()
+        {
+            //arrange
+            CustomListClass<int> customList = new CustomListClass<int>();
+            int value = 1;
+            int value2 = 2;
+            int value3 = 3;
+            int value4 = 4;
+            int value5 = 5;
+
+            //act
+            customList.Add(value);
+            customList.Add(value2);
+            customList.Add(value3);
+            customList.Add(value4);
+            customList.Add(value5);
+            int initialCount = customList.Count;
+            customList.Remove(customList[0]);
+            int finalCount = customList.Count;
+
+            //assert
+            Assert.AreEqual((initialCount - 1), finalCount);   
+
+        }
+
+        [TestMethod]
+        public void Remove_CheckWholeList_ValueRemoved()
+        {
+            //arrange
+            CustomListClass<int> customList = new CustomListClass<int>();
+            int value = 1;
+            int value2 = 2;
+            int value3 = 3;
+            int value4 = 4;
+            int value5 = 5;
+            bool expected = false;
+            bool actual = false ;
+
+            //act
+            customList.Add(value);
+            customList.Add(value2);
+            customList.Add(value3);
+            customList.Add(value4);
+            customList.Add(value5);
+            customList.Remove(value2);
+
+            for(int i = 0; i > customList.Count; i++)
+            {
+                if (value2 == customList[i])
+                {
+                    actual=true;
+                    break;
+                }
+                
+            }
+            //assert
+            Assert.AreEqual(expected, actual);
+
+        }
+
+        [TestMethod]
+        public void Remove_CheckIndex_NextIndexReplacesRemovedIndex()
+        {
+            //arrange
+            CustomListClass<int> customList = new CustomListClass<int>();
+            int value = 1;
+            int value2 = 2;
+            int value3 = 3;
+            int value4 = 4;
+            int value5 = 5;
+            int expected;
+            int actual;
+
+            //act
+            customList.Add(value);
+            customList.Add(value2);
+            customList.Add(value3);
+            customList.Add(value4);
+            customList.Add(value5);
+            expected = customList[2];       
+            customList.Remove(value2);
+            actual = customList[1];                      
+
+            //assert
+            Assert.AreEqual(expected, actual);
+
+        }
+
+
+        [TestMethod]
+        public void Remove_()
+        {
+
+        }
     }
+
+
 }
