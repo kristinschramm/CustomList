@@ -180,7 +180,7 @@ namespace CustomListTest
         }
 
         [TestMethod]
-        public void Combine_CheckValueIndex0_Index0EqualsFirstArrayIndex0()
+        public void PlusOverload_CheckValueIndex0_Index0EqualsFirstArrayIndex0()
 
         {
             //act
@@ -191,7 +191,7 @@ namespace CustomListTest
 
             //act
 
-            newCustomList.CombineList(customList1, customList2);
+            newCustomList = customList1 + customList2;
             int actual = newCustomList[0];
 
 
@@ -199,7 +199,7 @@ namespace CustomListTest
             Assert.AreEqual(expected, actual);
         }
         [TestMethod]
-        public void Combine_CheckValueIndexI_IndexIEqualsSecondArrayIndex0()
+        public void PlusOverload_CheckValueIndexI_IndexIEqualsSecondArrayIndex0()
         {
             //act
             CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5 };
@@ -209,7 +209,7 @@ namespace CustomListTest
 
             //act
 
-            newCustomList.CombineList(customList1, customList2);
+            newCustomList=customList1 + customList2;
             int actual = newCustomList[5];
 
 
@@ -218,7 +218,7 @@ namespace CustomListTest
 
         }
         [TestMethod]
-        public void Combine_CheckCount_NewArrayCountEqualsTotalCountOfTwoArrays()
+        public void PlusOverload_CheckCount_NewArrayCountEqualsTotalCountOfTwoArrays()
         {
             //act
             CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5 };
@@ -228,7 +228,7 @@ namespace CustomListTest
             int expectedCount = 10;
 
             //act
-            newCustomList.CombineList(customList1, customList2);
+            newCustomList= customList1 +customList2;
             int actualCount = newCustomList.Count;
 
             //assert
@@ -236,7 +236,7 @@ namespace CustomListTest
             Assert.AreEqual(expectedCount, actualCount);
         }
         [TestMethod]
-        public void Combine_CheckCapacity_CheckCapacityIncreaseAfterAdd()
+        public void PlusOverload_CheckCapacity_CheckCapacityIncreaseAfterAdd()
         {
             //act
             CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5 };
@@ -246,7 +246,7 @@ namespace CustomListTest
 
 
             //act
-            newCustomList.CombineList(customList1, customList2);
+            newCustomList= customList1 + customList2;
             int actual = newCustomList[10];
 
 
@@ -254,34 +254,36 @@ namespace CustomListTest
             Assert.AreEqual(expected, actual);
         }
         [TestMethod]
-        public void RemoveList_CheckNewCount_CountDecreaseBySecondListCount()
+        public void MinusOverload_CheckNewCount_CountDecreaseBySecondListCount()
         {
             //act
             CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             CustomListClass<int> customList2 = new CustomListClass<int>() { 6, 7, 8, 9, 10 };
-            int initialCount = customList1.Count;
-            int expectedCount = initialCount - customList2.Count;
+            
+            int expectedCount = customList1.Count - customList2.Count;
 
             //act
 
-            customList1 = customList1.RemoveList(customList2);
-            int actualCount = customList1.Count;
+            CustomListClass<int> customList3 = customList1 - customList2;
+           
+            int actualCount = customList3.Count;
 
 
             //assert
             Assert.AreEqual(expectedCount, actualCount);
         }
         [TestMethod]
-        public void RemoveList_CheckWholeList_ListRemoved()
+        public void MinusOverload_CheckWholeList_ListRemoved()
         {
             //arrange
             CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             CustomListClass<int> customList2 = new CustomListClass<int>() { 5, 6, 7, 8 };
+           
             bool expected = false;
             bool actual = false;
 
             //act
-            customList1 = customList1.RemoveList(customList2);
+            CustomListClass<int> customList3 = customList1 - customList2;
 
 
             for (int i = 0; i > customList2.Count; i++)
@@ -301,7 +303,7 @@ namespace CustomListTest
 
         }
         [TestMethod]
-        public void RemoveList_CheckValueAtIndexWhereListWasRemoved_ValueEqualsIndex()
+        public void MinusOverload_CheckValueAtIndexWhereListWasRemoved_ValueEqualsIndex()
         {
             //act
             CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -309,16 +311,16 @@ namespace CustomListTest
             CustomListClass<int> expectedList = new CustomListClass<int>() { 2, 7, 8, 9, 10 };
 
             //act
-            customList1.RemoveList(customList1, customList2);
-            
+            CustomListClass<int> customList3 = customList1 - customList2;
+
 
             // assert
 
-            Assert.AreEqual(expectedList, customList1);
+            Assert.AreEqual(expectedList[1], customList3[1]);
         }
 
         [TestMethod]
-        public void RemoveList_CheckNewListCount_ValueEqualsList1MinusList2()
+        public void MinusOverload_CheckNewListCount_ValueEqualsList1MinusList2()
         {
             //act
             CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -326,12 +328,82 @@ namespace CustomListTest
             int expectedCount = customList1.Count - customList2.Count;
 
             //act
-            customList1.RemoveList(customList1, customList2);
-            int actualCount = customList1.Count;
+            CustomListClass<int> customList3 = customList1 - customList2;
+            int actualCount = customList3.Count;
 
             // assert
 
             Assert.AreEqual(expectedCount, actualCount);
+        }
+
+        [TestMethod]
+        public void Zipper_CheckValueAtSecondIndex_SecondIndexEqualsList2Index1()
+        {
+            //act
+            CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 3, 5, 7, 9 };
+            CustomListClass<int> customList2 = new CustomListClass<int>() { 2, 4, 6, 8, 10 };
+            CustomListClass<int> customList3 = new CustomListClass<int>();
+
+
+            //act
+            customList3 = customList3.Zipper(customList1, customList2);
+
+            // assert
+
+            Assert.AreEqual(customList2[0], customList3[1]);
+        }
+
+        [TestMethod]
+        public void Zipper_CheckCount_CountEqualsSumofListsCount()
+        {
+            //act
+            CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 3, 5, 7, 9 };
+            CustomListClass<int> customList2 = new CustomListClass<int>() { 2, 4, 6, 8, 10 };
+            CustomListClass<int> customList3 = new CustomListClass<int>();
+            int expectedCount = customList1.Count + customList2.Count;
+
+            //act
+            customList3 = customList3.Zipper(customList1, customList2);
+
+
+            // assert
+
+            Assert.AreEqual(expectedCount, customList3.Count);
+        }
+
+        //zipper test verify each index bool
+
+        [TestMethod]
+        public void ToString_CheckCount_CountEqualsSumofListsCount()
+        {
+            //act
+            CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            string stringList = "";
+            string expectedString = "12345678910";
+
+            //act
+           stringList = customList1.ToString();
+
+
+            // assert
+
+            Assert.AreEqual(expectedString, stringList);
+        }
+        [TestMethod]
+        public void ToString_DisplaySpace_StringDisplaysWithSpaces()
+        {
+            //act
+            CustomListClass<int> customList1 = new CustomListClass<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            string stringList = "";
+            string expectedString = "1 2 3 4 5 6 7 8 9 10 ";
+
+            //act
+            stringList = customList1.ToString(" ");
+
+
+            // assert
+
+            Assert.AreEqual(expectedString, stringList);
         }
 
     }

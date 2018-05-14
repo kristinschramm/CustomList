@@ -127,24 +127,72 @@ namespace CustomList
 
         }
 
-        public void CombineList(CustomListClass<T> list1, CustomListClass<T> list2 )
+        public static CustomListClass<T> operator+ (CustomListClass<T> list1, CustomListClass<T> list2 )
         {
-                      
+            CustomListClass<T> array = new CustomListClass<T> ();      
             foreach (T item in list1)
             {
-                Add(item);
+                array.Add(item);
 
             }
             foreach(T item in list2)
             {
-                Add(item);
+                array.Add(item);
             }
-            return ;
+            return array;
 
 
         }
 
+        public static CustomListClass<T> operator -(CustomListClass<T> list1, CustomListClass<T> list2)
+        {
+            CustomListClass<T> array = new CustomListClass<T>();
+            array = list1;
+            foreach (T item in list2)
+            {
+                array.Remove(item);
+
+            }
         
+            return array;
+
+
+        }
+        
+        public CustomListClass<T> Zipper(CustomListClass<T> list1, CustomListClass<T> list2)
+        {
+            CustomListClass<T> tempList = new CustomListClass<T>();
+            for (int i = 0; i < list2.Count; i++)
+            {
+                tempList.Add(list1[i]);
+                tempList.Add(list2[i]);
+            }
+            return tempList;
+        }
+
+        public override string ToString()
+        {
+            string newString = "";
+
+            for(int i = 0; i < count; i ++)
+            {
+                newString += array[i];
+            }
+
+            return newString ;
+        }
+
+        public string ToString(string character)
+        {
+            string newString = "";
+
+            for (int i = 0; i < count; i++)
+            {
+                newString += array[i] + character;
+            }
+
+            return newString;
+        }
     }
 
 
