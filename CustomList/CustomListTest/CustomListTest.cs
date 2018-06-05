@@ -228,7 +228,7 @@ namespace CustomListTest
             int expectedCount = 10;
 
             //act
-            newCustomList= customList1 +customList2;
+            newCustomList= customList1 + customList2;
             int actualCount = newCustomList.Count;
 
             //assert
